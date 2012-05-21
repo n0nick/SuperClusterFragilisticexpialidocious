@@ -1,9 +1,6 @@
 #ifndef superCLUSTERagilisticexpialidoCONSTS
 #define superCLUSTERagilisticexpialidoCONSTS
 
-
-const int MAX_INPUT_SIZE = 100;
-const int MAX_ARGUMENTS = 100;
 const char* COMMAND_ADD_VERTEX = "add_vertex";
 const char* COMMAND_PRINT_DEGREE = "print_degree";
 const char* COMMAND_ADD_EDGE = "add_edge";
