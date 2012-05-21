@@ -6,7 +6,7 @@
 
 struct command {
 	char* action;
-	char arguments[MAX_INPUT_SIZE][MAX_ARGUMENTS]; // TODO use the constants here
+	char arguments[MAX_INPUT_SIZE][MAX_ARGUMENTS];
 	char arguments_count;
 };
 
