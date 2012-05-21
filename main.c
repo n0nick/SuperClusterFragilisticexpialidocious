@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "consts.h"
-#include "commands.h"
+#include "commands_parser.h"
 
 int main(int argc, char* argv[])
 {

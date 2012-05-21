@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include "commands.h"
+#include "commands_parser.h"
 
 char* trim(char* input) {
 	int trimStart = 0;
