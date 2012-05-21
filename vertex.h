@@ -9,7 +9,7 @@ struct edge {
 }
 
 struct vertex {
-	unsigned int	id;
+	unsigned int id;
 	char* name;
 	unsigned int degree;
 	edge edges;
