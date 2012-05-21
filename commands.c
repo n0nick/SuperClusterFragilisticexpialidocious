@@ -1,6 +1,5 @@
 #include <string.h>
 #include <stdlib.h>
-#include "consts.h"
 #include "commands.h"
 
 char* trim(char* input) {
