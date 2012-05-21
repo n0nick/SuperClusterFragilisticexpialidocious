@@ -10,32 +10,19 @@ int main(int argc, char* argv[])
 {
 	// vars
 	char* input;
-	char* currentPiece;
-	char* command = (char *) malloc(MAX_INPUT_SIZE);
-	char arguments[MAX_ARGUMENTS][MAX_INPUT_SIZE];
-	int id = 0;
+	struct command cmd;
 	int i = 0;
 
 	input = (char *) malloc(MAX_INPUT_SIZE);
 
 	// Reading input
 	scanf("%[^\n\r]s", input);
-	input = trim(input);
-
-	// Getting the command
-	command = strtok(input, " ");
-
-	// Getting arguments
-	currentPiece = strtok(NULL, " ");
-	while(currentPiece != NULL) {
-		strcpy(arguments[id++], trim(currentPiece));
-		currentPiece = strtok(NULL, " ");
-	}
+	cmd = parse(input);
 
 	// Looping until getting quit
-	printf("command was: %s\n\r", command);
-	while(i < id) {
-		printf("arguments %d is: %s\n\r", i+1, arguments[i]);
+	printf("command was: %s\n\r", cmd.action);
+	while(i < cmd.arguments_count) {
+		printf("arguments %d is: %s\n\r", i+1, cmd.arguments[i]);
 		i++;
 	}
 

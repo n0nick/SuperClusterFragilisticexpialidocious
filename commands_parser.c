@@ -2,6 +2,29 @@
 #include <stdlib.h>
 #include "commands_parser.h"
 
+struct command parse(char* input) {
+	struct command cmd;
+	char* arg;
+	int i = 0;
+
+	input = trim(input);
+
+	// Getting the command
+	cmd.action = strtok(input, " ");
+
+	// Getting arguments
+	arg = strtok(NULL, " ");
+	while(arg != NULL) {
+		strcpy(cmd.arguments[i++], trim(arg));
+		arg = strtok(NULL, " ");
+	}
+
+	cmd.arguments_count = i;
+
+	return cmd;
+}
+
+
 char* trim(char* input) {
 	int trimStart = 0;
 	int trimEnd = strlen(input) - 1;
