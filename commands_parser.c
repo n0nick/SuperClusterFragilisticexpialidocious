@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "commands_parser.h"
 
 struct command parse(char* input) {
@@ -31,11 +32,11 @@ char* trim(char* input) {
 	int idx;
 	char* output;
 	
-	while((trimStart < strlen(input)) && (input[trimStart] == ' ')) {
+	while((trimStart < strlen(input)) && (isspace(input[trimStart]))) {
 		trimStart++;
 	}
 
-	while((trimEnd > 0) && (input[trimEnd] == ' ')) {
+	while((trimEnd > 0) && (isspace(input[trimEnd]))) {
 		trimEnd--;
 	}
 
