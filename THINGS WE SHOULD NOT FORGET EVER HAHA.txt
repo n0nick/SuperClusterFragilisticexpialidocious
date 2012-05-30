@@ -1,0 +1,7 @@
+Fix the security issues (secure programming)
+#DEFINE (instead of consts)
+fgets (instead of scanf)
+for each command, make sure number of arguments matches expected
+print degree - not to exceed array bounds
+fix input to write error on > 30 chars
+rework edges in vertices
