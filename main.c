@@ -16,10 +16,13 @@ int main(int argc, char* argv[])
 	struct command cmd;
 	int size = 0;
 	int maxSize = VERTEX_ARRAY_INITIAL_SIZE;
+	int countEdges = 0;
 	int i = 0;
 	bool quit = FALSE;
-	int id;
+	int id, id1, id2, count;
 	int ch;
+	double weight;
+	double totalWeights = 0;
 
 	// initialize values
 	vertices = (struct vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(struct vertex));
@@ -56,8 +59,37 @@ int main(int argc, char* argv[])
 			}
 
 			// add edge
+			else if(strcmp(cmd.action, COMMAND_ADD_EDGE) == 0) {
+				if (valid_args_num(cmd, 3)) {
+					id1 = valid_id(cmd.arguments[0], size);
+					if(id1 > INVALID_ARGUMENT) {
+						id2 = valid_id(cmd.arguments[1], size);
+						if (id2 > INVALID_ARGUMENT) {
+							weight = valid_weight(cmd.arguments[2]);
+							if (weight > INVALID_ARGUMENT) {
+								if ((totalWeights + weight) > MAX_TOTAL_WEIGHTS) {
+									printf("Error: sum of edges weight must be less than 1000\n");
+								} else {
+									add_edge(vertices, id1, id2, weight, &countEdges, &totalWeights);
+								}
+							}
+						}
+					}
+				}
+			}
 
 			// remove edge
+			else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
+				if (valid_args_num(cmd, 2)) {
+					id1 = valid_id(cmd.arguments[0], size);				
+					if(id1 > INVALID_ARGUMENT) {
+						id2 = valid_id(cmd.arguments[1], size);
+						if (id2 > INVALID_ARGUMENT) {
+							remove_edge(vertices, id1, id2, &countEdges, &totalWeights);
+						}
+					}
+				}
+			}
 
 			// id by name
 			else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
@@ -66,7 +98,12 @@ int main(int argc, char* argv[])
 
 			// print
 			else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
-				print_vertices(vertices, size);
+				if (valid_args_num(cmd, 0)) {
+					print_vertices(vertices, size);
+					if(countEdges > 0) {
+						print_edges(vertices, size);
+					}
+				}
 			}
 
 			// cluster
