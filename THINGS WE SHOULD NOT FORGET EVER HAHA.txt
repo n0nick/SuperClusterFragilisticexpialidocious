@@ -1,7 +1,10 @@
-Fix the security issues (secure programming)
-#DEFINE (instead of consts)
-fgets (instead of scanf)
-for each command, make sure number of arguments matches expected
-print degree - not to exceed array bounds
-fix input to write error on > 30 chars
-rework edges in vertices
+check return value for malloc, printf, scanf
+cover all headers with IFNDEF...
+fix quit : free memory
+
+MOVE ALL PRINTF's TO MAIN
+malloc (return should not be null)
+printf (return should be >= 0)
+scanf (return should be != EOF)
+
+make a file for makefile
