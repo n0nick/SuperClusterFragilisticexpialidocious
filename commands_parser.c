@@ -129,3 +129,38 @@ int valid_cluster_size(char* arg, int size) {
 
 	return num;
 }
+
+double valid_weight(char* arg) {
+	int i;
+	double num;
+	bool valid = TRUE;
+	bool gotDecimalPoint = FALSE;
+
+	// 1. The string contains only digits
+	for(i = 0; (i < strlen(arg)) && (valid == TRUE); i++) {
+		if((gotDecimalPoint == FALSE) && (arg[i] == '.')) {
+			gotDecimalPoint = TRUE;
+		}
+		else if((arg[i] < '0') || (arg[i] > '9')) { 
+			valid = FALSE;
+		}
+		
+	}
+
+	// Converting string --> double
+	num = atof(arg);
+
+	// The number is NON-NEGATIVE :), :|
+	if(num < 0) {
+		valid = FALSE;
+	}
+
+	if (valid == TRUE) {
+		return num;
+	} else {
+		printf("Error: weight paramteter is a non-negative double\n");
+		return INVALID_ARGUMENT;
+	}
+}
+
+}
