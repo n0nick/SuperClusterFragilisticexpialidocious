@@ -7,6 +7,7 @@
 #include "command_names.h"
 #include "commands_parser.h"
 #include "vertex.h"
+#include "cluster.h"
 
 int main(int argc, char* argv[])
 {
@@ -27,6 +28,7 @@ int main(int argc, char* argv[])
 	// initialize values
 	vertices = (struct vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(struct vertex));
 	input = (char *) malloc(MAX_INPUT_SIZE);
+	srand(23);
 
 	while (!quit) {
 		scanf("%[^\n]*", input);
@@ -119,6 +121,14 @@ int main(int argc, char* argv[])
 			}
 
 			// cluster
+			else if(strcmp(cmd.action, COMMAND_CLUSTER) == 0) {
+				if (valid_args_num(cmd, 1)) {
+					count = valid_cluster_size(cmd.arguments[0]);
+					if (count > INVALID_ARGUMENT) {
+						cluster(vertices, size, count);
+					}
+				}
+			}
 			
 			// unknown command
 			else {
