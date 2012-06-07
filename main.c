@@ -42,19 +42,29 @@ int main(int argc, char* argv[])
 
 			// quit
 			if (strcmp(cmd.action, COMMAND_QUIT) == 0) {
-				quit = TRUE;
+				if (valid_args_num(cmd, 0)) {
+					quit = TRUE;
+				}
 			}
 			
 			// add vertex
 			else if (strcmp(cmd.action, COMMAND_ADD_VERTEX) == 0) {
-				vertices = add_vertex(vertices, &size, &maxSize, cmd.arguments[0]);
+				if (valid_args_num(cmd, 1)) {
+					if(size >= MAX_VERTICES) {
+						printf("Error: cannot add vertex - too many vertices\n");
+					} else {
+						vertices = add_vertex(vertices, &size, &maxSize, cmd.arguments[0]);
+					}
+				}
 			}
 
 			// print degree
 			else if(strcmp(cmd.action, COMMAND_PRINT_DEGREE) == 0) {
-				id = valid_id(cmd.arguments[0], size);
-				if (id > INVALID_ARGUMENT) { // valid id value
-					print_degree(vertices, atoi(cmd.arguments[0]));
+				if (valid_args_num(cmd, 1)) {
+					id = valid_id(cmd.arguments[0], size);
+					if (id > INVALID_ARGUMENT) { // valid id value
+						print_degree(vertices, atoi(cmd.arguments[0]));
+					}
 				}
 			}
 
@@ -93,7 +103,9 @@ int main(int argc, char* argv[])
 
 			// id by name
 			else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
-				print_by_name(vertices, cmd.arguments[0], size);
+				if (valid_args_num(cmd, 1)) {
+					print_by_name(vertices, cmd.arguments[0], size);
+				}
 			}
 
 			// print
