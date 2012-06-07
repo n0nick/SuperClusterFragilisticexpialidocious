@@ -57,9 +57,16 @@ void print_degree(struct vertex* vertices, int id) {
 
 void print_by_name(struct vertex* vertices, char* name, int size) {
 	int i;
+	bool found = FALSE;
 	for(i = 0;  i < size; i++) {
 		if(strcmp(vertices[i].name, name) == 0) {
 			printf("%d\n", vertices[i].id);
+			found = TRUE;
+		}
+	}
+
+	if(found == FALSE) {
+		printf("Error: vertex name is not in the system\n");
 		}
 	}
 }
