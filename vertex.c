@@ -33,6 +33,7 @@ struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, 
 	// initializing values
 	newArray[*size].id = *size;
 	newArray[*size].degree = 0;
+	newArray[*size].edges = NULL;
 	newArray[*size].name = (char *) malloc(strlen(name) + 1);
 	strcpy(newArray[*size].name, name);
 	(*size)++;
