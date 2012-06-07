@@ -15,7 +15,7 @@ struct vertex {
 	unsigned int id;
 	char* name;
 	unsigned int degree;
-	struct edge edges;
+	struct edge* edges;
 };
 
 struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, char* name);
