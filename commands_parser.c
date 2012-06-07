@@ -163,4 +163,11 @@ double valid_weight(char* arg) {
 	}
 }
 
+bool valid_args_num(struct command cmd, int requiredArgs) {
+	if (cmd.arguments_count != requiredArgs) {
+		printf("Error: command %s must have %d parameters\n", cmd.action, requiredArgs);
+		return FALSE;
+	} else {
+		return TRUE;
+	}
 }
