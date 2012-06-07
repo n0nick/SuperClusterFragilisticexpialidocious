@@ -27,8 +27,11 @@ int main(int argc, char* argv[])
 
 	while (!quit) {
 		scanf("%[^\n]*", input);
-
-		if (strlen(input) > MAX_INPUT_SIZE) {
+		
+		if(strlen(input) < MIN_INPUT_SIZE) {
+			printf("Error: command must have at least one character\n");
+		}
+		else if (strlen(input) > MAX_INPUT_SIZE) {
 			printf("Error: command length must be less than or equal to 30 characters\n");
 		} else {
 

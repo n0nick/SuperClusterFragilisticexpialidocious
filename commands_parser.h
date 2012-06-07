@@ -2,6 +2,7 @@
 #define superCLUSTERagilisticexpialidoCOMMAND
 
 #define MAX_INPUT_SIZE 30
+#define MIN_INPUT_SIZE 2
 #define MAX_ARGUMENTS 3
 
 #define INVALID_ARGUMENT -1
