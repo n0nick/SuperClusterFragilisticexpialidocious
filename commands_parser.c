@@ -83,7 +83,6 @@ int valid_integer(char* arg) {
 	if (valid) {
 		return num;
 	} else {
-		printf("Error: ID parameter is not a non-negative integer\n");
 		return INVALID_ARGUMENT;
 	}
 }
@@ -99,11 +98,16 @@ int valid_id(char* arg, int size) {
 			valid = TRUE;
 		} else {
 			printf("Error: ID number is not in the system\n");
-			return INVALID_ARGUMENT;
 		}
+	} else {
+		printf("Error: ID parameter is not a non-negative integer\n");
 	}
 
-	return num;
+	if (valid) {
+		return num;
+	} else {
+		return INVALID_ARGUMENT;
+	}
 }
 
 int valid_cluster_size(char* arg, int size) {
@@ -115,10 +119,12 @@ int valid_cluster_size(char* arg, int size) {
 	if (num > INVALID_ARGUMENT) {
 		if (num >= MIN_CLUSTER_SIZE) {
 			valid = TRUE;
-		} else {
-			printf("Error: ID number is not in the system\n");
-			return INVALID_ARGUMENT;
 		}
+	}
+	
+	if (!valid) {
+		printf("Error: number of clusters parameter must be an integer type bigger than 1\n");
+		return INVALID_ARGUMENT;
 	}
 
 	return num;
