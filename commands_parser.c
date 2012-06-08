@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <limits.h>
 #include "consts.h"
 #include "commands_parser.h"
 
