@@ -110,7 +110,7 @@ int valid_id(char* arg, int size) {
 	}
 }
 
-int valid_cluster_size(char* arg, int size) {
+int valid_cluster_size(char* arg) {
 	int num;
 	bool valid = FALSE;
 
