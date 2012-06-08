@@ -9,11 +9,11 @@ struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, 
 	int i;
 
 	if((*size) >= (*maxSize)) {
-		// re-allocate memory
+		/* re-allocate memory */
 		(*maxSize) = (*maxSize) * VERTEX_ARRAY_SIZE_FACTOR;
 		newArray = (struct vertex *) malloc((*maxSize) * sizeof(struct vertex));
 
-		// copy current content
+		/* copy current content */
 		for(i = 0; i < (*size); i++) {
 			newArray[i].degree = currentArray[i].degree;
 			newArray[i].edges = currentArray[i].edges;
@@ -24,13 +24,13 @@ struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, 
 			free(currentArray[i].name);
 		}
 
-		// releasing old memory
+		/* releasing old memory */
 		free(currentArray);
 	} else {
 		newArray = currentArray;
 	}
 
-	// initializing values
+	/* initializing values */
 	newArray[*size].id = *size;
 	newArray[*size].degree = 0;
 	newArray[*size].edges = NULL;
@@ -94,13 +94,13 @@ void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* cou
 
 	valid = TRUE;
 
-	// validate weight
+	/* validate weight */
 	if (weight >= MAX_WEIGHT) {
 		printf("Error: weight parameter must be less than 100\n");
 		valid = FALSE;
 	}
 
-	// no edges between the same vertex
+	/* no edges between the same vertex */
 	else if (id1 == id2) {
 		printf("Error: edge must be between two different vertices\n");
 		valid = FALSE;
@@ -110,7 +110,7 @@ void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* cou
 		v1 = &(vertices[id1]);
 		v2 = &(vertices[id2]);
 
-		// check to see if vertex already exists
+		/* check to see if vertex already exists */
 		if (v1->degree < v2->degree) {
 			currEdge = v1->edges;
 		} else {
@@ -130,7 +130,7 @@ void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* cou
 		add_one_edge(v1, v2, weight);
 		add_one_edge(v2, v1, weight);
 
-		// count edge
+		/* count edge */
 		*countEdges = *countEdges + 1;
 		*totalWeights = *totalWeights + weight;
 		v1->degree++;
@@ -141,10 +141,10 @@ void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* cou
 
 void add_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double weight) {
 
-	// current edge
+	/* current edge */
 	struct edge* currEdge;
 
-	// build new edge
+	/* build new edge */
 	struct edge* newEdge;
 	newEdge = (struct edge*) malloc(sizeof(struct edge));
 	newEdge->vertexID = vertexTo->id;
@@ -152,10 +152,10 @@ void add_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double wei
 	newEdge->prev = NULL;
 
 	currEdge = vertexFrom->edges;
-	if(currEdge == NULL) { // first edge
+	if(currEdge == NULL) { /* first edge */
 		newEdge->next = NULL;
 		vertexFrom->edges = newEdge;
-	} else { // attach to edges list
+	} else { /* attach to edges list */
 		newEdge->next = currEdge;
 		currEdge->prev = newEdge;
 		vertexFrom->edges = newEdge;
@@ -179,7 +179,7 @@ void remove_edge(struct vertex* vertices, int id1, int id2, int* countEdges, dou
 		printf("Error: edge is not in the graph\n");
 	} else {
 		
-		// count edge
+		/* count edge */
 		*countEdges = *countEdges - 1;
 		*totalWeights = *totalWeights - removedWeight;
 		v1->degree--;
@@ -197,20 +197,20 @@ int remove_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double* 
 	while((currEdge != NULL) && (!didDelete)) {
 		if(currEdge->vertexID == vertexTo->id) {
 
-			// first
+			/* first */
 			if(currEdge->prev == NULL) {
 				vertexFrom->edges = currEdge->next;
-				if(currEdge->next != NULL) { // first but not last
+				if(currEdge->next != NULL) { /* first but not last */
 					currEdge->next->prev = NULL;
 				}
 			}
 
-			// last
+			/* last */
 			else if(currEdge->next == NULL) {
 				currEdge->prev->next = NULL;
 			}
 
-			// middle
+			/* middle */
 			else {
 				currEdge->prev->next = currEdge->next;
 				currEdge->next->prev = currEdge->prev;

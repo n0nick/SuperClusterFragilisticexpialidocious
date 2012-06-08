@@ -12,10 +12,10 @@ struct command parse(char* input) {
 
 	input = trim(input);
 
-	// Getting the command
+	/* getting the command */
 	cmd.action = strtok(input, " ");
 
-	// Getting arguments
+	/* getting arguments */
 	arg = strtok(NULL, " ");
 	while(arg != NULL) {
 		strcpy(cmd.arguments[i++], trim(arg));
@@ -59,23 +59,23 @@ int valid_integer(char* arg) {
 	bool valid = TRUE;
 	char max_int_str[12];
 
-	// string representation of INT_MAX
+	/* string representation of INT_MAX */
 	itoa(INT_MAX, max_int_str, 10);
 
-	// 1. The string contains only digits
+	/* 1. The string contains only digits */
 	for(i = 0; i < strlen(arg); i++) {
 		if((arg[i] < '0') || (arg[i] > '9')) { 
 			valid = FALSE;
 		}
 	}
 
-	// 2. The number is bounded by (2^31 - 1)
+	/* 2. The number is bounded by (2^31 - 1) */
 	num = atoi(arg);
 	if((num == INT_MAX) && (strcmp(arg, max_int_str) != 0)) {
 		valid = FALSE;
 	}
 
-	// 3. The number is NON-NEGATIVE :), :|
+	/* 3. The number is NON-NEGATIVE :), :| */
 	if(num < 0) {
 		valid = FALSE;
 	}
@@ -136,21 +136,21 @@ double valid_weight(char* arg) {
 	bool valid = TRUE;
 	bool gotDecimalPoint = FALSE;
 
-	// 1. The string contains only digits
+	/* 1. The string contains only digits */
 	for(i = 0; (i < strlen(arg)) && (valid == TRUE); i++) {
 		if((gotDecimalPoint == FALSE) && (arg[i] == '.')) {
 			gotDecimalPoint = TRUE;
 		}
-		else if((arg[i] < '0') || (arg[i] > '9')) { 
+		else if((arg[i] < '0') || (arg[i] > '9')) {
 			valid = FALSE;
 		}
 		
 	}
 
-	// Converting string --> double
+	/* converting string --> double */
 	num = atof(arg);
 
-	// The number is NON-NEGATIVE :), :|
+	/* the number is NON-NEGATIVE :), :| */
 	if(num < 0) {
 		valid = FALSE;
 	}

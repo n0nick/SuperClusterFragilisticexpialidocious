@@ -1,5 +1,3 @@
-// main.c : Defines the entry point for the console application.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-	// definitions
+	/* definitions */
 	struct vertex* vertices;
 	char* input;
 	struct command cmd;
@@ -25,7 +23,7 @@ int main(int argc, char* argv[])
 	double weight;
 	double totalWeights = 0;
 
-	// initialize values
+	/* initialize values */
 	vertices = (struct vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(struct vertex));
 	input = (char *) malloc(MAX_INPUT_SIZE);
 	srand(23);
@@ -42,14 +40,14 @@ int main(int argc, char* argv[])
 
 			cmd = parse(input);
 
-			// quit
+			/* quit */
 			if (strcmp(cmd.action, COMMAND_QUIT) == 0) {
 				if (valid_args_num(cmd, 0)) {
 					quit = TRUE;
 				}
 			}
 			
-			// add vertex
+			/* add vertex */
 			else if (strcmp(cmd.action, COMMAND_ADD_VERTEX) == 0) {
 				if (valid_args_num(cmd, 1)) {
 					if(size >= MAX_VERTICES) {
@@ -60,17 +58,17 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// print degree
+			/* print degree */
 			else if(strcmp(cmd.action, COMMAND_PRINT_DEGREE) == 0) {
 				if (valid_args_num(cmd, 1)) {
 					id = valid_id(cmd.arguments[0], size);
-					if (id > INVALID_ARGUMENT) { // valid id value
+					if (id > INVALID_ARGUMENT) { /* valid id value */
 						print_degree(vertices, atoi(cmd.arguments[0]));
 					}
 				}
 			}
 
-			// add edge
+			/* add edge */
 			else if(strcmp(cmd.action, COMMAND_ADD_EDGE) == 0) {
 				if (valid_args_num(cmd, 3)) {
 					id1 = valid_id(cmd.arguments[0], size);
@@ -90,7 +88,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// remove edge
+			/* remove edge */
 			else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
 				if (valid_args_num(cmd, 2)) {
 					id1 = valid_id(cmd.arguments[0], size);				
@@ -103,14 +101,14 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// id by name
+			/* id by name */
 			else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
 				if (valid_args_num(cmd, 1)) {
 					print_by_name(vertices, cmd.arguments[0], size);
 				}
 			}
 
-			// print
+			/* print */
 			else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
 				if (valid_args_num(cmd, 0)) {
 					print_vertices(vertices, size);
@@ -120,7 +118,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			// cluster
+			/* cluster */
 			else if(strcmp(cmd.action, COMMAND_CLUSTER) == 0) {
 				if (valid_args_num(cmd, 1)) {
 					count = valid_cluster_size(cmd.arguments[0]);
@@ -130,13 +128,13 @@ int main(int argc, char* argv[])
 				}
 			}
 			
-			// unknown command
+			/* unknown command */
 			else {
 				printf("Error: command not found\n");
 			}
 		}
 
-		while ((ch = getchar()) != EOF && ch != '\n'); // Cleaning the buffer
+		while ((ch = getchar()) != EOF && ch != '\n'); /* cleaning the buffer */
 	}
 
 	return 0;
