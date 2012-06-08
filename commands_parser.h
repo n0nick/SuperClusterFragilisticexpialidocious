@@ -17,9 +17,9 @@ struct command {
 
 command parse(char* input);
 char* trim(char* input);
-int valid_integer(char* arg);
-int valid_id(char* arg, int size);
-int valid_cluster_size(char* arg);
+long int valid_integer(char* arg);
+long int valid_id(char* arg, int size);
+long int valid_cluster_size(char* arg);
 double valid_weight(char* arg);
 bool valid_args_num(command cmd, int requiredArgs);
 

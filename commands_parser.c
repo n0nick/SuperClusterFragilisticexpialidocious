@@ -54,14 +54,14 @@ char* trim(char* input) {
 	return output;
 }
 
-int valid_integer(char* arg) {
+long int valid_integer(char* arg) {
 	int i;
-	int num;
+	long int num;
 	bool valid = TRUE;
 	char max_int_str[12];
 
-	/* string representation of INT_MAX */
-	itoa(INT_MAX, max_int_str, 10);
+	/* string representation of LONG_MAX */
+	itoa(LONG_MAX, max_int_str, 10);
 
 	/* 1. The string contains only digits */
 	for(i = 0; i < strlen(arg); i++) {
@@ -72,7 +72,7 @@ int valid_integer(char* arg) {
 
 	/* 2. The number is bounded by (2^31 - 1) */
 	num = atoi(arg);
-	if((num == INT_MAX) && (strcmp(arg, max_int_str) != 0)) {
+	if((num == LONG_MAX) && (strcmp(arg, max_int_str) != 0)) {
 		valid = FALSE;
 	}
 
@@ -88,8 +88,8 @@ int valid_integer(char* arg) {
 	}
 }
 
-int valid_id(char* arg, int size) {
-	int num;
+long int valid_id(char* arg, int size) {
+	long int num;
 	bool valid = FALSE;
 
 	num = valid_integer(arg);
@@ -111,8 +111,8 @@ int valid_id(char* arg, int size) {
 	}
 }
 
-int valid_cluster_size(char* arg) {
-	int num;
+long int valid_cluster_size(char* arg) {
+	long int num;
 	bool valid = FALSE;
 
 	num = valid_integer(arg);
