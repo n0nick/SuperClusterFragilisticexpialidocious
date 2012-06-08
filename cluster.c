@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cluster.h"
 #include "vertex.h"
+#include "cluster.h"
 
 int* random_ints(int arraySize, int max) {
 	int i;	
