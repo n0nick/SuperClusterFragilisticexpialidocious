@@ -16,7 +16,6 @@ int main(int argc, char* argv[])
 	int size = 0;
 	int maxSize = VERTEX_ARRAY_INITIAL_SIZE;
 	int countEdges = 0;
-	int i = 0;
 	bool quit = FALSE;
 	int id, id1, id2, count;
 	int ch;
