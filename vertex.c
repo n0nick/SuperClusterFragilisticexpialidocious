@@ -168,7 +168,6 @@ void remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* to
 	double removedWeight;
 	vertex* v1;
 	vertex* v2;
-	edge* currEdge;
 
 	v1 = &(vertices[id1]);
 	v2 = &(vertices[id2]);
