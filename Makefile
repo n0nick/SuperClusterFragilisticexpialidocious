@@ -2,6 +2,7 @@ CFLAGS = -Wall -ansi -pedantic-errors
 CC = gcc
 
 ex2 : main.o commands_parser.o vertex.o cluster.o
+	$(CC) main.o commands_parser.o vertex.o cluster.o -o ex2
 
 main.o : main.c consts.h command_names.h
 	$(CC) $(CFLAGS)	-c main.c
