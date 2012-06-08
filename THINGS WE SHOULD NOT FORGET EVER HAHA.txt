@@ -1,10 +1,8 @@
-check return value for malloc, printf, scanf
-cover all headers with IFNDEF...
-fix quit : free memory
-
-MOVE ALL PRINTF's TO MAIN
-malloc (return should not be null)
-printf (return should be >= 0)
-scanf (return should be != EOF)
-
-make a file for makefile
+* check return value for malloc, printf, scanf
+  - malloc (return should not be null)
+  - printf (return should be >= 0)
+  - scanf (return should be != EOF)
+* cover all headers with IFNDEF...
+* fix quit : free memory
+* make a file for makefile
+* fix issue at https://gist.github.com/2894512
