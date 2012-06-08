@@ -58,10 +58,6 @@ long int valid_integer(char* arg) {
 	int i;
 	long int num;
 	bool valid = TRUE;
-	char max_int_str[12];
-
-	/* string representation of LONG_MAX */
-	itoa(LONG_MAX, max_int_str, 10);
 
 	/* 1. The string contains only digits */
 	for(i = 0; i < strlen(arg); i++) {
@@ -72,7 +68,7 @@ long int valid_integer(char* arg) {
 
 	/* 2. The number is bounded by (2^31 - 1) */
 	num = atoi(arg);
-	if((num == LONG_MAX) && (strcmp(arg, max_int_str) != 0)) {
+	if((num == LONG_MAX) && (strcmp(arg, INT_MAX_STR) != 0)) {
 		valid = FALSE;
 	}
 

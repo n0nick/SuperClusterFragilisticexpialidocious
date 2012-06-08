@@ -1,6 +1,8 @@
 #ifndef superCLUSTERagilisticexpialidoCOMMAND
 #define superCLUSTERagilisticexpialidoCOMMAND
 
+#define INT_MAX_STR (char *)"2147483647"
+
 #define MAX_INPUT_SIZE 30
 #define MIN_INPUT_SIZE 2
 #define MAX_ARGUMENTS 3
