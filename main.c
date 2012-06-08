@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 	/* definitions */
 	struct vertex* vertices;
 	char* input;
-	struct command cmd;
+	command cmd;
 	int size = 0;
 	int maxSize = VERTEX_ARRAY_INITIAL_SIZE;
 	int countEdges = 0;

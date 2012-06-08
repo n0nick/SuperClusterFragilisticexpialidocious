@@ -5,8 +5,8 @@
 #include "consts.h"
 #include "commands_parser.h"
 
-struct command parse(char* input) {
-	struct command cmd;
+command parse(char* input) {
+	command cmd;
 	char* arg;
 	int i = 0;
 
@@ -163,7 +163,7 @@ double valid_weight(char* arg) {
 	}
 }
 
-bool valid_args_num(struct command cmd, int requiredArgs) {
+bool valid_args_num(command cmd, int requiredArgs) {
 	if (cmd.arguments_count != requiredArgs) {
 		printf("Error: command %s must have %d parameters\n", cmd.action, requiredArgs);
 		return FALSE;
