@@ -31,6 +31,6 @@ void print_edges(struct vertex* vertices, int size);
 void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights);
 void remove_edge(struct vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights);
 void add_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double weight);
-int remove_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo);
+int remove_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double* removedWeight);
 
 #endif
