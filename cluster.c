@@ -14,14 +14,14 @@ int* random_ints(int arraySize, int max) {
 	return arr;
 }
 
-void cluster(struct vertex* vertices, int size, int clustersCount) {
+void cluster(vertex* vertices, int size, int clustersCount) {
 	int* clusters;
 
 	clusters = random_ints(size, clustersCount);
 	print_clusters(vertices, size, clusters, clustersCount);
 }
 
-void print_clusters(struct vertex* vertices, int size, int* clusters, int clustersCount) {
+void print_clusters(vertex* vertices, int size, int* clusters, int clustersCount) {
 	int i;
 	double score;
 
@@ -38,12 +38,12 @@ void print_clusters(struct vertex* vertices, int size, int* clusters, int cluste
 	}
 }
 
-double clustering_score(struct vertex* vertices, int size, int* clusters) {
+double clustering_score(vertex* vertices, int size, int* clusters) {
 	
 	double scoreInside = 0;
 	double scoreOutside = 0;
 	int i;
-	struct edge* currEdge;
+	edge* currEdge;
 
 	for(i = 0; i < size; i++) {
 		currEdge = vertices[i].edges;

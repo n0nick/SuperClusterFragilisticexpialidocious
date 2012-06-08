@@ -4,14 +4,14 @@
 #include "vertex.h"
 #include "consts.h"
 
-struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, char* name) {
-	struct vertex* newArray;
+vertex* add_vertex(vertex* currentArray, int* size, int* maxSize, char* name) {
+	vertex* newArray;
 	int i;
 
 	if((*size) >= (*maxSize)) {
 		/* re-allocate memory */
 		(*maxSize) = (*maxSize) * VERTEX_ARRAY_SIZE_FACTOR;
-		newArray = (struct vertex *) malloc((*maxSize) * sizeof(struct vertex));
+		newArray = (vertex *) malloc((*maxSize) * sizeof(vertex));
 
 		/* copy current content */
 		for(i = 0; i < (*size); i++) {
@@ -42,7 +42,7 @@ struct vertex* add_vertex(struct vertex* currentArray, int* size, int* maxSize, 
 	return currentArray;
 }
 
-void print_vertices(struct vertex* vertices, int size) {
+void print_vertices(vertex* vertices, int size) {
 	int i;
 	printf("%d vertices:\n", size);
 	for(i = 0; i < size; i++) {
@@ -50,13 +50,13 @@ void print_vertices(struct vertex* vertices, int size) {
 	}
 }
 
-void print_degree(struct vertex* vertices, int id) {
+void print_degree(vertex* vertices, int id) {
 	printf("%d\n", vertices[id].degree);
 }
 
-void print_edges(struct vertex* vertices, int size) {
+void print_edges(vertex* vertices, int size) {
 	int i;
-	struct edge* currEdge;
+	edge* currEdge;
 	printf("edges:\n");
 
 	for(i = 0; i < size; i++) {
@@ -70,7 +70,7 @@ void print_edges(struct vertex* vertices, int size) {
 	}
 }
 
-void print_by_name(struct vertex* vertices, char* name, int size) {
+void print_by_name(vertex* vertices, char* name, int size) {
 	int i;
 	bool found = FALSE;
 	for(i = 0;  i < size; i++) {
@@ -85,12 +85,12 @@ void print_by_name(struct vertex* vertices, char* name, int size) {
 	}
 }
 
-void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights) {
+void add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights) {
 
 	bool valid;
-	struct vertex* v1;
-	struct vertex* v2;
-	struct edge* currEdge;
+	vertex* v1;
+	vertex* v2;
+	edge* currEdge;
 
 	valid = TRUE;
 
@@ -139,14 +139,14 @@ void add_edge(struct vertex* vertices, int id1, int id2, double weight, int* cou
 
 }
 
-void add_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double weight) {
+void add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight) {
 
 	/* current edge */
-	struct edge* currEdge;
+	edge* currEdge;
 
 	/* build new edge */
-	struct edge* newEdge;
-	newEdge = (struct edge*) malloc(sizeof(struct edge));
+	edge* newEdge;
+	newEdge = (edge*) malloc(sizeof(edge));
 	newEdge->vertexID = vertexTo->id;
 	newEdge->weight = weight;
 	newEdge->prev = NULL;
@@ -162,13 +162,13 @@ void add_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double wei
 	}
 }
 
-void remove_edge(struct vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights) {
+void remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights) {
 	
 	bool success;
 	double removedWeight;
-	struct vertex* v1;
-	struct vertex* v2;
-	struct edge* currEdge;
+	vertex* v1;
+	vertex* v2;
+	edge* currEdge;
 
 	v1 = &(vertices[id1]);
 	v2 = &(vertices[id2]);
@@ -187,10 +187,10 @@ void remove_edge(struct vertex* vertices, int id1, int id2, int* countEdges, dou
 	}
 }
 
-int remove_one_edge(struct vertex* vertexFrom, struct vertex* vertexTo, double* removedWeight) {
+int remove_one_edge(vertex* vertexFrom, vertex* vertexTo, double* removedWeight) {
 
 	bool didDelete;
-	struct edge* currEdge;
+	edge* currEdge;
 	didDelete = FALSE;
 
 	currEdge = vertexFrom->edges;

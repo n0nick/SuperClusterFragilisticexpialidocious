@@ -7,11 +7,13 @@
 
 #define INVALID_ARGUMENT -1
 
-typedef struct {
+typedef struct command command;
+
+struct command {
 	char* action;
 	char arguments[MAX_ARGUMENTS][MAX_INPUT_SIZE]; /* TODO use the constants here */
 	char arguments_count;
-} command;
+};
 
 command parse(char* input);
 char* trim(char* input);
