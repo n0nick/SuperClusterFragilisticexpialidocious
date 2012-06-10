@@ -76,7 +76,11 @@ int main(int argc, char* argv[])
 						if (id2 > INVALID_ARGUMENT) {
 							weight = valid_weight(cmd.arguments[2]);
 							if (weight > INVALID_ARGUMENT) {
-								if ((totalWeights + weight) > MAX_TOTAL_WEIGHTS) {
+								/* validate weight value */
+								if (weight >= MAX_WEIGHT) {
+									printf("Error: weight parameter must be less than 100\n");
+								}
+								else if ((totalWeights + weight) > MAX_TOTAL_WEIGHTS) {
 									printf("Error: sum of edges weight must be less than 1000\n");
 								} else {
 									add_edge(vertices, id1, id2, weight, &countEdges, &totalWeights);

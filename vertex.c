@@ -94,14 +94,8 @@ void add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges
 
 	valid = TRUE;
 
-	/* validate weight */
-	if (weight >= MAX_WEIGHT) {
-		printf("Error: weight parameter must be less than 100\n");
-		valid = FALSE;
-	}
-
 	/* no edges between the same vertex */
-	else if (id1 == id2) {
+	if (id1 == id2) {
 		printf("Error: edge must be between two different vertices\n");
 		valid = FALSE;
 	}
