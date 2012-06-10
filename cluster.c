@@ -32,7 +32,7 @@ void print_clusters(vertex* vertices, int size, int* clusters, int clustersCount
 		}
 
 		score = clustering_score(vertices, size, clusters);
-		printf("The random clustering score of %d clusters is %f\n", clustersCount, score);
+		printf("The random clustering score for %d clusters is %f\n", clustersCount, score);
 	} else {
 		printf("\n");
 	}
