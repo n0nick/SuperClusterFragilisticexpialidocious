@@ -1,5 +1,5 @@
-#ifndef COMMAND_NAMES_H
-#define COMMAND_NAMES_H
+#ifndef superCLUSTERagilisticexpialidoCOMMANDNAMES
+#define superCLUSTERagilisticexpialidoCOMMANDNAMES
 
 const char* COMMAND_ADD_VERTEX = "add_vertex";
 const char* COMMAND_PRINT_DEGREE = "print_degree";

@@ -1,5 +1,5 @@
-#ifndef SAFE_FUNCS_H
-#define SAFE_FUNCS_H
+#ifndef superCLUSTERagilisticexpialidoSAFEFUNCS
+#define superCLUSTERagilisticexpialidoSAFEFUNCS
 
 void safe_printf(char* str, ...);
 

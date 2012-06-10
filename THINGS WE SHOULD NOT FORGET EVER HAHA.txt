@@ -2,7 +2,6 @@
   - malloc (return should not be null)
   - printf (return should be >= 0)
   - scanf (return should be != EOF)
-* cover all headers with IFNDEF...
 * fix quit : free memory
 * fix issue at https://gist.github.com/2894512
 * rand() doesn't work?!
