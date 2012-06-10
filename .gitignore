@@ -1,2 +1,5 @@
 *.o
 ex2
+.cproject
+.project
+Debug/
