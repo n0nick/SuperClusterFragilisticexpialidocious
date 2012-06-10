@@ -6,5 +6,4 @@
 * fix quit : free memory
 * make a file for makefile
 * fix issue at https://gist.github.com/2894512
-* after chaing commands_parser.c, 'make' doesn't do anything :(
 * rand() doesn't work?!
