@@ -4,6 +4,5 @@
   - scanf (return should be != EOF)
 * cover all headers with IFNDEF...
 * fix quit : free memory
-* make a file for makefile
 * fix issue at https://gist.github.com/2894512
 * rand() doesn't work?!
