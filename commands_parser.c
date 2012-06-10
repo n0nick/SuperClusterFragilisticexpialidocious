@@ -155,7 +155,7 @@ double valid_weight(char* arg) {
 	if (valid == TRUE) {
 		return num;
 	} else {
-		printf("Error: weight paramteter is a non-negative double\n");
+		printf("Error: weight parameter is not a non-negative double\n");
 		return INVALID_ARGUMENT;
 	}
 }
