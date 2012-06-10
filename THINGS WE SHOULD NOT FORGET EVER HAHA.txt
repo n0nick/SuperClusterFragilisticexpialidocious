@@ -8,5 +8,3 @@
 * fix issue at https://gist.github.com/2894512
 * after chaing commands_parser.c, 'make' doesn't do anything :(
 * rand() doesn't work?!
-* tab character does not separate between arguments, i.e.
-  add_vertex 555	c   => creates a vertex named "555\tc"

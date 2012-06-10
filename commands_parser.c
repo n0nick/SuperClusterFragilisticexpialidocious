@@ -9,18 +9,19 @@
 command parse(char* input) {
 	command cmd;
 	char* arg;
+	char delims[] = " \f\n\r\t\v"; /* equivalent to C's isspace() */
 	int i = 0;
 
 	input = trim(input);
 
 	/* getting the command */
-	cmd.action = strtok(input, " ");
+	cmd.action = strtok(input, delims);
 
 	/* getting arguments */
-	arg = strtok(NULL, " ");
+	arg = strtok(NULL, delims);
 	while(arg != NULL) {
 		strcpy(cmd.arguments[i++], trim(arg));
-		arg = strtok(NULL, " ");
+		arg = strtok(NULL, delims);
 	}
 
 	cmd.arguments_count = i;
