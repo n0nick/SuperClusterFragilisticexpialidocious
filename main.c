@@ -36,10 +36,6 @@ int main(int argc, char* argv[])
 		}
 		input[i] = '\0';
 
-		if (ch == EOF) { /* end of file */
-			quit = TRUE;
-		}
-
 		if (ch != '\n' && ch != EOF) { /* clear input buffer */
 			while ((ch = getchar()) != EOF && ch != '\n');
 		}
