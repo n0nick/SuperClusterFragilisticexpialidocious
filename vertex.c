@@ -62,7 +62,7 @@ void print_edges(vertex* vertices, int size) {
 	for(i = 0; i < size; i++) {
 		currEdge = vertices[i].edges;
 		while(currEdge != NULL) {
-			if (i > currEdge->vertexID) {
+			if (i > currEdge->vertexID) { /* to conform with supplied tests */
 				printf("%s %s %f\n", vertices[i].name, vertices[currEdge->vertexID].name, currEdge->weight);
 			}
 			currEdge = currEdge->next;
