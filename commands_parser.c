@@ -17,7 +17,11 @@ command parse(char* text, int* success) {
 	while (!isspace(text[i])) {
 		cmd.action[argIndex++] = text[i++];
 	}
+<<<<<<< HEAD
 	cmd.action[argIndex] = '\0';
+=======
+	cmd.action[i] = '\0';
+>>>>>>> eeb7cd2d8a16d8715f93ab5fd39784e354b77e85
 	while (isspace(text[i])) { i++; } /* right trim */
 
 	while (i < strlen(text)) {
