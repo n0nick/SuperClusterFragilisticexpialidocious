@@ -26,15 +26,17 @@ void cluster(vertex* vertices, int size, int clustersCount, int* success) {
 
 	clusters = random_ints(size, clustersCount);
 	if (clusters != NULL) {
-		*success = print_clusters(vertices, size, clusters, clustersCount);
+		print_clusters(vertices, size, clusters, clustersCount, success);
 		free(clusters);
 	}
 }
 
-int print_clusters(vertex* vertices, int size, int* clusters, int clustersCount) {
+void print_clusters(vertex* vertices, int size, int* clusters, int clustersCount, int* success) {
 	int i;
 	int printf_result;
 	double score;
+
+	*success = SUCCESS;
 
 	if (size > 0) {
 		printf_result = printf("%d vertices:\n", size);
@@ -52,9 +54,7 @@ int print_clusters(vertex* vertices, int size, int* clusters, int clustersCount)
 
 	if (printf_result < 0) {
 		perror(ERROR_PRINTF);
-		return FAILURE;
-	} else {
-		return SUCCESS;
+		*success = FAILURE;
 	}
 }
 
