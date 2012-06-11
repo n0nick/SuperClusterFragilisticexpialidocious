@@ -103,8 +103,8 @@ void print_edges(vertex* vertices, int size, int* success) {
 	for(i = 0; i < size && printf_result >= 0; i++) {
 		currEdge = vertices[i].edges;
 		while(currEdge != NULL && printf_result >= 0) {
-			if (i > currEdge->vertexID) { /* to conform with supplied tests */
-				printf_result = printf("%s %s %f\n", vertices[i].name, vertices[currEdge->vertexID].name, currEdge->weight);
+			if (i < currEdge->vertexID) { /* to conform with supplied tests */
+				printf_result = printf("%s %s %f\n", vertices[currEdge->vertexID].name, vertices[i].name, currEdge->weight);
 			}
 			currEdge = currEdge->next;
 		}
