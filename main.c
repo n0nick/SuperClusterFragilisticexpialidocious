@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 		/* main input loop */
 		i = 0;
 		while ((ch = getchar()) != '\n' && ch != EOF &&
-				i < (MAX_INPUT_SIZE + 1)) {
+				i < (MAX_INPUT_SIZE + 1)) { /* +1 to identify long commands */
 			input[i++] = ch;
 		}
 		input[i] = '\0';
@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
 			while ((ch = getchar()) != EOF && ch != '\n');
 		}
 
+		/* validate command length */
 		if(strlen(input) < MIN_INPUT_SIZE) {
 			printf_result = printf("Error: command must have at least one character\n");
 		}
@@ -56,11 +57,12 @@ int main(int argc, char* argv[])
 			printf_result = printf("Error: command length must be less than or equal to 30 characters\n");
 		} else {
 
+			/* parse command and process it */
 			cmd = parse(input, &success);
 
 			if (success == SUCCESS) {
 
-				/* quit */
+				/* action: quit */
 				if (strcmp(cmd.action, COMMAND_QUIT) == 0) {
 					success = validate_args_num(cmd, 0, &valid_args);
 					if (success && valid_args) {
@@ -68,7 +70,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* add vertex */
+				/* action: add vertex */
 				else if (strcmp(cmd.action, COMMAND_ADD_VERTEX) == 0) {
 					success = validate_args_num(cmd, 1, &valid_args);
 					if (success && valid_args) {
@@ -80,7 +82,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* print degree */
+				/* action: print degree */
 				else if(strcmp(cmd.action, COMMAND_PRINT_DEGREE) == 0) {
 					success = validate_args_num(cmd, 1, &valid_args);
 					if (success && valid_args) {
@@ -91,7 +93,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* add edge */
+				/* action: add edge */
 				else if(strcmp(cmd.action, COMMAND_ADD_EDGE) == 0) {
 					success = validate_args_num(cmd, 3, &valid_args);
 					if (success && valid_args) {
@@ -116,7 +118,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* remove edge */
+				/* action: remove edge */
 				else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
 					success = validate_args_num(cmd, 2, &valid_args);
 					if (success && valid_args) {
@@ -130,7 +132,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* id by name */
+				/* action: id by name */
 				else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
 					success = validate_args_num(cmd, 1, &valid_args);
 					if (success && valid_args) {
@@ -138,7 +140,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* print */
+				/* action: print */
 				else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
 					success = validate_args_num(cmd, 0, &valid_args);
 					if (success && valid_args) {
@@ -149,7 +151,7 @@ int main(int argc, char* argv[])
 					}
 				}
 
-				/* cluster */
+				/* action: cluster */
 				else if(strcmp(cmd.action, COMMAND_CLUSTER) == 0) {
 					success = validate_args_num(cmd, 1, &valid_args);
 					if (success && valid_args) {
@@ -166,6 +168,7 @@ int main(int argc, char* argv[])
 				}
 			}
 
+			/* handle errors */
 			if (printf_result < 0) { /* printf error occurred */
 				perror(ERROR_PRINTF);
 				success = FAILURE;
@@ -176,7 +179,6 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
-
 
 	if (success == FAILURE) {
 		/* TODO free everything */
