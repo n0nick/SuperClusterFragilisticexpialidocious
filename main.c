@@ -11,9 +11,9 @@ int main(int argc, char* argv[])
 {
 	/* definitions */
 	struct vertex* vertices;
-	char* input;
 	command cmd;
 	int size = 0;
+	int i;
 	int maxSize = VERTEX_ARRAY_INITIAL_SIZE;
 	int countEdges = 0;
 	bool quit = FALSE;
@@ -21,15 +21,25 @@ int main(int argc, char* argv[])
 	int ch;
 	double weight;
 	double totalWeights = 0;
+	char input[MAX_INPUT_SIZE + 1 + 1];
 
 	/* initialize values */
 	vertices = (struct vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(struct vertex));
-	input = (char *) malloc(MAX_INPUT_SIZE);
 	srand(23);
 
 	while (!quit) {
-		scanf("%[^\n]*", input);
-		
+		/* main input loop */
+		i = 0;
+		while ((ch = getchar()) != '\n' && ch != EOF &&
+				i < (MAX_INPUT_SIZE + 1)) {
+			input[i++] = ch;
+		}
+		input[i] = '\0';
+
+		if (ch != '\n' && ch != EOF) { /* clear input buffer */
+			while ((ch = getchar()) != EOF && ch != '\n');
+		}
+
 		if(strlen(input) < MIN_INPUT_SIZE) {
 			printf("Error: command must have at least one character\n");
 		}
@@ -45,7 +55,7 @@ int main(int argc, char* argv[])
 					quit = TRUE;
 				}
 			}
-			
+
 			/* add vertex */
 			else if (strcmp(cmd.action, COMMAND_ADD_VERTEX) == 0) {
 				if (valid_args_num(cmd, 1)) {
@@ -94,7 +104,7 @@ int main(int argc, char* argv[])
 			/* remove edge */
 			else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
 				if (valid_args_num(cmd, 2)) {
-					id1 = valid_id(cmd.arguments[0], size);				
+					id1 = valid_id(cmd.arguments[0], size);
 					if(id1 > INVALID_ARGUMENT) {
 						id2 = valid_id(cmd.arguments[1], size);
 						if (id2 > INVALID_ARGUMENT) {
@@ -130,14 +140,12 @@ int main(int argc, char* argv[])
 					}
 				}
 			}
-			
+
 			/* unknown command */
 			else {
 				printf("Error: command not found\n");
 			}
 		}
-
-		while ((ch = getchar()) != EOF && ch != '\n'); /* cleaning the buffer */
 	}
 
 	return 0;
