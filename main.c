@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
 						if (success && valid_args) {
 							success = validate_cluster_size(cmd.arguments[0], &count);
 							if (success && count > INVALID_ARGUMENT) {
-								success = cluster(vertices, size, count);
+								cluster(vertices, size, count, &success);
 							}
 						}
 					}

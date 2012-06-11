@@ -1,7 +1,7 @@
 #ifndef superCLUSTERagilisticexpialidoCLUSTER
 #define superCLUSTERagilisticexpialidoCLUSTER
 
-int cluster(vertex* vertices, int size, int clustersCount);
+void cluster(vertex* vertices, int size, int clustersCount, int* success);
 
 int* random_ints(int arraySize, int max);
 int print_clusters(vertex* vertices, int size, int* clusters, int clustersCount);

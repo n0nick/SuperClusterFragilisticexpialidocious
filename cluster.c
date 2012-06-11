@@ -20,18 +20,15 @@ int* random_ints(int arraySize, int max) {
 	return arr;
 }
 
-int cluster(vertex* vertices, int size, int clustersCount) {
+void cluster(vertex* vertices, int size, int clustersCount, int* success) {
 	int* clusters;
-	int success = FAILURE;
+	*success = FAILURE;
 
 	clusters = random_ints(size, clustersCount);
 	if (clusters != NULL) {
-		success = print_clusters(vertices, size, clusters, clustersCount);
+		*success = print_clusters(vertices, size, clusters, clustersCount);
 		free(clusters);
 	}
-
-	/* failure */
-	return success;
 }
 
 int print_clusters(vertex* vertices, int size, int* clusters, int clustersCount) {
