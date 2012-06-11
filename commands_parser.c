@@ -6,18 +6,18 @@
 #include "consts.h"
 #include "commands_parser.h"
 
-command parse(char* input, int* success) {
+command parse(char* text, int* success) {
 	command cmd;
 	char* arg;
 	char delims[] = " \f\n\r\t\v"; /* equivalent to C's isspace() */
 	int i = 0;
 
-	input = trim(input, success);
+	text = trim(text, success);
 
 	if (*success == SUCCESS) {
 
 		/* getting the command */
-		cmd.action = strtok(input, delims);
+		cmd.action = strtok(text, delims);
 
 		/* getting arguments */
 		arg = strtok(NULL, delims);
@@ -31,35 +31,34 @@ command parse(char* input, int* success) {
 
 	if (*success == SUCCESS) {
 		cmd.arguments_count = i;
-		free(input);
 	}
 
 	return cmd;
 }
 
 
-char* trim(char* input, int* success) {
+char* trim(char* text, int* success) {
 	int trimStart = 0;
-	int trimEnd = strlen(input) - 1;
+	int trimEnd = strlen(text) - 1;
 	int idx;
-	char* output;
+	char* trimmed;
 	
-	while((trimStart < strlen(input)) && (isspace(input[trimStart]))) {
+	while((trimStart < strlen(text)) && (isspace(text[trimStart]))) {
 		trimStart++;
 	}
 
-	while((trimEnd > 0) && (isspace(input[trimEnd]))) {
+	while((trimEnd > 0) && (isspace(text[trimEnd]))) {
 		trimEnd--;
 	}
 
-	output = (char *) malloc(trimEnd - trimStart + 1);
-	if (output != NULL) {
+	trimmed = (char *) malloc(trimEnd - trimStart + 1);
+	if (trimmed != NULL) {
 		idx = trimStart;
 		while(idx <= trimEnd) {
-			output[idx - trimStart] = input[idx];
+			trimmed[idx - trimStart] = text[idx];
 			idx++;
 		}
-		output[idx - trimStart] = '\0';
+		trimmed[idx - trimStart] = '\0';
 
 		*success = SUCCESS;
 	} else {
@@ -67,7 +66,7 @@ char* trim(char* input, int* success) {
 		*success = FAILURE;
 	}
 
-	return output;
+	return trimmed;
 }
 
 long int valid_integer(char* arg) {
