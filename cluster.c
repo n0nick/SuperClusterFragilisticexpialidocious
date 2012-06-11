@@ -8,7 +8,7 @@ int* random_ints(int arraySize, int max) {
 	int* arr = (int*) malloc(sizeof(int) * arraySize);
 	
 	for(i = 0; i < arraySize; i++) {
-		arr[i] = max * rand() / (RAND_MAX + 1.0);
+		arr[i] = max * (rand() / (RAND_MAX + 1.0));
 	}
 	
 	return arr;

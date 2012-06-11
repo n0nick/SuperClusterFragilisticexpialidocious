@@ -4,4 +4,4 @@
   - scanf (return should be != EOF)
 * fix quit : free memory
 * fix issue at https://gist.github.com/2894512
-* rand() doesn't work?!
+* newlines repeat last command
