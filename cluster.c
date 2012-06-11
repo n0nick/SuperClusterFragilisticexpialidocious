@@ -10,15 +10,14 @@ int* random_ints(int arraySize, int max) {
 	
 	if (arr == NULL) { /* malloc failure */
 		perror(ERROR_MALLOC);
-		return NULL;
 	}
 	else {
 		for(i = 0; i < arraySize; i++) {
 			arr[i] = max * (rand() / (RAND_MAX + 1.0));
 		}
-
-		return arr;
 	}
+
+	return arr;
 }
 
 int cluster(vertex* vertices, int size, int clustersCount) {
