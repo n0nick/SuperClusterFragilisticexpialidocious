@@ -21,7 +21,6 @@ int main(int argc, char* argv[])
 	command cmd;
 	long int id, id1, id2, count;
 	double weight;
-	bool valid_args;
 
 	int i;
 	int success;
@@ -68,16 +67,14 @@ int main(int argc, char* argv[])
 
 					/* action: quit */
 					if (strcmp(cmd.action, COMMAND_QUIT) == 0) {
-						success = validate_args_num(cmd, 0, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 0, &success) && success) {
 							quit = TRUE;
 						}
 					}
 
 					/* action: add vertex */
 					else if (strcmp(cmd.action, COMMAND_ADD_VERTEX) == 0) {
-						success = validate_args_num(cmd, 1, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 1, &success) && success) {
 							if(size >= MAX_VERTICES) {
 								printf_result = printf("Error: cannot add vertex - too many vertices\n");
 							} else {
@@ -88,8 +85,7 @@ int main(int argc, char* argv[])
 
 					/* action: print degree */
 					else if(strcmp(cmd.action, COMMAND_PRINT_DEGREE) == 0) {
-						success = validate_args_num(cmd, 1, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 1, &success) && success) {
 							success = validate_id(cmd.arguments[0], size, &id);
 							if (success && id > INVALID_ARGUMENT) { /* valid id value */
 								success = print_degree(vertices, atoi(cmd.arguments[0]));
@@ -99,8 +95,7 @@ int main(int argc, char* argv[])
 
 					/* action: add edge */
 					else if(strcmp(cmd.action, COMMAND_ADD_EDGE) == 0) {
-						success = validate_args_num(cmd, 3, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 3, &success) && success) {
 							success = validate_id(cmd.arguments[0], size, &id1);
 							if (success && id1 > INVALID_ARGUMENT) {
 								success = validate_id(cmd.arguments[1], size, &id2);
@@ -124,8 +119,7 @@ int main(int argc, char* argv[])
 
 					/* action: remove edge */
 					else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
-						success = validate_args_num(cmd, 2, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 2, &success) && success) {
 							success = validate_id(cmd.arguments[0], size, &id1);
 							if (success && id1 > INVALID_ARGUMENT) {
 								success = validate_id(cmd.arguments[1], size, &id2);
@@ -138,16 +132,14 @@ int main(int argc, char* argv[])
 
 					/* action: id by name */
 					else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
-						success = validate_args_num(cmd, 1, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 1, &success) && success) {
 							success = print_by_name(vertices, cmd.arguments[0], size);
 						}
 					}
 
 					/* action: print */
 					else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
-						success = validate_args_num(cmd, 0, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 0, &success) && success) {
 							success = print_vertices(vertices, size);
 							if (success && edges_count > 0) {
 								success = print_edges(vertices, size);
@@ -157,8 +149,7 @@ int main(int argc, char* argv[])
 
 					/* action: cluster */
 					else if(strcmp(cmd.action, COMMAND_CLUSTER) == 0) {
-						success = validate_args_num(cmd, 1, &valid_args);
-						if (success && valid_args) {
+						if (valid_args_num(cmd, 1, &success) && success) {
 							success = validate_cluster_size(cmd.arguments[0], &count);
 							if (success && count > INVALID_ARGUMENT) {
 								cluster(vertices, size, count, &success);

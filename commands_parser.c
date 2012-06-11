@@ -185,16 +185,16 @@ int validate_weight(char* arg, double* num) {
 	return SUCCESS;
 }
 
-int validate_args_num(command cmd, int requiredArgs, bool* isvalid) {
+bool valid_args_num(command cmd, int requiredArgs, int* success) {
+	*success = TRUE;
+
 	if (cmd.arguments_count != requiredArgs) {
 		if (printf("Error: command %s must have %d parameters\n", cmd.action, requiredArgs) < 0) {
 			perror(ERROR_PRINTF);
-			return FAILURE;
+			*success = FAILURE;
 		}
-		*isvalid = FALSE;
+		return FALSE;
 	} else {
-		*isvalid = TRUE;
+		return TRUE;
 	}
-
-	return SUCCESS;
 }
