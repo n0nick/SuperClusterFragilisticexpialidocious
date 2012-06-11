@@ -21,9 +21,9 @@ command parse(char* input, int* success);
 char* trim(char* input, int* success);
 
 long int valid_integer(char* arg);
-int validate_id(char* arg, int size, long int* num);
-int validate_cluster_size(char* arg, long int* num);
-int validate_weight(char* arg, double* num);
+long int valid_id(char* arg, int size, int* success);
+long int valid_cluster_size(char* arg, int* success);
+double valid_weight(char* arg, int* success);
 bool valid_args_num(command cmd, int requiredArgs, int* success);
 
 #endif

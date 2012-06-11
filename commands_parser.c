@@ -100,41 +100,43 @@ long int valid_integer(char* arg) {
 	}
 }
 
-int validate_id(char* arg, int size, long int* num) {
+long int valid_id(char* arg, int size, int* success) {
 	bool valid = FALSE;
+	long int id = valid_integer(arg);
 
-	*num = valid_integer(arg);
+	*success = SUCCESS;
 
-	if (*num > INVALID_ARGUMENT) {
-		if (*num < size) {
+	if (id > INVALID_ARGUMENT) {
+		if (id < size) {
 			valid = TRUE;
 		} else {
 			if (printf("Error: ID number is not in the system\n") < 0) {
 				perror(ERROR_PRINTF);
-				return FAILURE;
+				*success = FAILURE;
 			}
 		}
 	} else {
 		if (printf("Error: ID parameter is not a non-negative integer\n") < 0) {
 			perror(ERROR_PRINTF);
-			return FAILURE;
+			*success = FAILURE;
 		}
 	}
 
 	if (!valid) {
-		*num = INVALID_ARGUMENT;
+		id = INVALID_ARGUMENT;
 	}
 
-	return SUCCESS;
+	return id;
 }
 
-int validate_cluster_size(char* arg, long int* num) {
+long int valid_cluster_size(char* arg, int* success) {
 	bool valid = FALSE;
+	long int cluster_size = valid_integer(arg);
 
-	*num = valid_integer(arg);
+	*success = SUCCESS;
 
-	if (*num > INVALID_ARGUMENT) {
-		if (*num >= MIN_CLUSTER_SIZE) {
+	if (cluster_size > INVALID_ARGUMENT) {
+		if (cluster_size >= MIN_CLUSTER_SIZE) {
 			valid = TRUE;
 		}
 	}
@@ -142,18 +144,21 @@ int validate_cluster_size(char* arg, long int* num) {
 	if (!valid) {
 		if (printf("Error: number of clusters parameter must be an integer type bigger than 1\n") < 0) {
 			perror(ERROR_PRINTF);
-			return FAILURE;
+			*success = FAILURE;
 		}
-		*num = INVALID_ARGUMENT;
+		cluster_size = INVALID_ARGUMENT;
 	}
 
-	return SUCCESS;
+	return cluster_size;
 }
 
-int validate_weight(char* arg, double* num) {
+double valid_weight(char* arg, int* success) {
 	int i;
+	double weight;
 	bool valid = TRUE;
 	bool gotDecimalPoint = FALSE;
+
+	*success = SUCCESS;
 
 	/* 1. The string contains only digits */
 	for(i = 0; (i < strlen(arg)) && (valid == TRUE); i++) {
@@ -167,22 +172,22 @@ int validate_weight(char* arg, double* num) {
 	}
 
 	/* converting string --> double */
-	*num = atof(arg);
+	weight = atof(arg);
 
 	/* the number is NON-NEGATIVE :), :| */
-	if(*num < 0) {
+	if (weight < 0) {
 		valid = FALSE;
 	}
 
 	if (!valid) {
 		if (printf("Error: weight parameter is not a non-negative double\n") < 0) {
 			perror(ERROR_PRINTF);
-			return FAILURE;
+			*success = FAILURE;
 		}
-		*num = INVALID_ARGUMENT;
+		weight = INVALID_ARGUMENT;
 	}
 
-	return SUCCESS;
+	return weight;
 }
 
 bool valid_args_num(command cmd, int requiredArgs, int* success) {
