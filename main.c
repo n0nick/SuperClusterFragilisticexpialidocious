@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	double weight;
 
 	int i;
-	int success;
+	int success = SUCCESS;
 	int printf_result = 0;
 	bool quit = FALSE;
 
