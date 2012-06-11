@@ -10,11 +10,13 @@
 int main(int argc, char* argv[])
 {
 	/* definitions */
-	struct vertex* vertices;
+	vertex* vertices;
 	int size = 0;
 	int maxSize = VERTEX_ARRAY_INITIAL_SIZE;
 	double totalWeights = 0;
 	int edges_count = 0;
+	edge* currEdge;
+	edge* nextEdge;
 
 	char input[MAX_INPUT_SIZE + 1 + 1];
 	int ch;
@@ -29,7 +31,7 @@ int main(int argc, char* argv[])
 
 	/* initialize values */
 	srand(23);
-	vertices = (struct vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(struct vertex));
+	vertices = (vertex *) malloc(VERTEX_ARRAY_INITIAL_SIZE * sizeof(vertex));
 	if (vertices == NULL) {
 		perror(ERROR_MALLOC);
 		return EXIT_FAILURE;
@@ -176,8 +178,19 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	/* free everything */
+	for (i = 0; i < size; i++) {
+		currEdge = vertices[i].edges;
+		while (currEdge != NULL) {
+			nextEdge = currEdge->next;
+			free(currEdge);
+			currEdge = nextEdge;
+		}
+		free(vertices[i].name);
+	}
+	free(vertices);
+
 	if (success == FAILURE) {
-		/* TODO free everything */
 		return EXIT_FAILURE;
 	} else {
 		return EXIT_SUCCESS;

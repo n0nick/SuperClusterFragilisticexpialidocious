@@ -1,2 +1,0 @@
-* fix quit : free memory
-* main: on quit or on failure, free vertices, names and all edges
