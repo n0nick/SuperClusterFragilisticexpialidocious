@@ -86,9 +86,9 @@ int main(int argc, char* argv[])
 					/* action: print degree */
 					else if(strcmp(cmd.action, COMMAND_PRINT_DEGREE) == 0) {
 						if (valid_args_num(cmd, 1, &success) && success) {
-							success = validate_id(cmd.arguments[0], size, &id);
+							id = valid_id(cmd.arguments[0], size, &success);
 							if (success && id > INVALID_ARGUMENT) { /* valid id value */
-								success = print_degree(vertices, atoi(cmd.arguments[0]));
+								print_degree(vertices, atoi(cmd.arguments[0]), &success);
 							}
 						}
 					}
@@ -96,11 +96,11 @@ int main(int argc, char* argv[])
 					/* action: add edge */
 					else if(strcmp(cmd.action, COMMAND_ADD_EDGE) == 0) {
 						if (valid_args_num(cmd, 3, &success) && success) {
-							success = validate_id(cmd.arguments[0], size, &id1);
+							id1 = valid_id(cmd.arguments[0], size, &success);
 							if (success && id1 > INVALID_ARGUMENT) {
-								success = validate_id(cmd.arguments[1], size, &id2);
+								id2 = valid_id(cmd.arguments[1], size, &success);
 								if (success && id2 > INVALID_ARGUMENT) {
-									success = validate_weight(cmd.arguments[2], &weight);
+									weight = valid_weight(cmd.arguments[2], &success);
 									if (success && weight > INVALID_ARGUMENT) {
 										/* validate weight value */
 										if (weight >= MAX_WEIGHT) {
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 										else if ((totalWeights + weight) > MAX_TOTAL_WEIGHTS) {
 											printf_result = printf("Error: sum of edges weight must be less than 1000\n");
 										} else {
-											success = add_edge(vertices, id1, id2, weight, &edges_count, &totalWeights);
+											add_edge(vertices, id1, id2, weight, &edges_count, &totalWeights, &success);
 										}
 									}
 								}
@@ -120,11 +120,11 @@ int main(int argc, char* argv[])
 					/* action: remove edge */
 					else if(strcmp(cmd.action, COMMAND_REMOVE_EDGE) == 0) {
 						if (valid_args_num(cmd, 2, &success) && success) {
-							success = validate_id(cmd.arguments[0], size, &id1);
+							id1 = valid_id(cmd.arguments[0], size, &success);
 							if (success && id1 > INVALID_ARGUMENT) {
-								success = validate_id(cmd.arguments[1], size, &id2);
+								id2 = valid_id(cmd.arguments[1], size, &success);
 								if (success && id2 > INVALID_ARGUMENT) {
-									success = remove_edge(vertices, id1, id2, &edges_count, &totalWeights);
+									remove_edge(vertices, id1, id2, &edges_count, &totalWeights, &success);
 								}
 							}
 						}
@@ -133,16 +133,16 @@ int main(int argc, char* argv[])
 					/* action: id by name */
 					else if(strcmp(cmd.action, COMMAND_ID_BY_NAME) == 0) {
 						if (valid_args_num(cmd, 1, &success) && success) {
-							success = print_by_name(vertices, cmd.arguments[0], size);
+							print_by_name(vertices, cmd.arguments[0], size, &success);
 						}
 					}
 
 					/* action: print */
 					else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
 						if (valid_args_num(cmd, 0, &success) && success) {
-							success = print_vertices(vertices, size);
+							print_vertices(vertices, size, &success);
 							if (success && edges_count > 0) {
-								success = print_edges(vertices, size);
+								print_edges(vertices, size, &success);
 							}
 						}
 					}
@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
 					/* action: cluster */
 					else if(strcmp(cmd.action, COMMAND_CLUSTER) == 0) {
 						if (valid_args_num(cmd, 1, &success) && success) {
-							success = validate_cluster_size(cmd.arguments[0], &count);
+							count = valid_cluster_size(cmd.arguments[0], &success);
 							if (success && count > INVALID_ARGUMENT) {
 								cluster(vertices, size, count, &success);
 							}

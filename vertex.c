@@ -73,9 +73,11 @@ vertex* add_vertex(vertex* currentArray, int* size, int* maxSize, char* name, in
 	return currentArray;
 }
 
-int print_vertices(vertex* vertices, int size) {
+void print_vertices(vertex* vertices, int size, int* success) {
 	int i;
 	int printf_result;
+
+	*success = SUCCESS;
 
 	printf_result = printf("%d vertices:\n", size);
 
@@ -85,16 +87,16 @@ int print_vertices(vertex* vertices, int size) {
 
 	if (printf_result < 0) {
 		perror(ERROR_PRINTF);
-		return FAILURE;
-	} else {
-		return SUCCESS;
+		*success = FAILURE;
 	}
 }
 
-int print_edges(vertex* vertices, int size) {
+void print_edges(vertex* vertices, int size, int* success) {
 	int i;
 	edge* currEdge;
 	int printf_result;
+
+	*success = SUCCESS;
 
 	printf_result = printf("edges:\n");
 
@@ -110,28 +112,28 @@ int print_edges(vertex* vertices, int size) {
 
 	if (printf_result < 0) {
 		perror(ERROR_PRINTF);
-		return FAILURE;
-	} else {
-		return SUCCESS;
+		*success = FAILURE;
 	}
 }
 
-int print_degree(vertex* vertices, int id) {
+void print_degree(vertex* vertices, int id, int* success) {
+	*success = SUCCESS;
+
 	if (printf("%d\n", vertices[id].degree) < 0) {
 		perror(ERROR_PRINTF);
-		return FAILURE;
-	} else {
-		return SUCCESS;
+		*success = FAILURE;
 	}
 }
 
-int print_by_name(vertex* vertices, char* name, int size) {
+void print_by_name(vertex* vertices, char* name, int size, int* success) {
 	int i;
 	int printf_result = 0;
 	bool found = FALSE;
 
-	for(i = 0;  i < size && printf_result >= 0; i++) {
-		if(strcmp(vertices[i].name, name) == 0) {
+	*success = SUCCESS;
+
+	for (i = 0;  i < size && printf_result >= 0; i++) {
+		if (strcmp(vertices[i].name, name) == 0) {
 			printf_result = printf("%d\n", vertices[i].id);
 			found = TRUE;
 		}
@@ -143,15 +145,13 @@ int print_by_name(vertex* vertices, char* name, int size) {
 		}
 	}
 
-	if (printf_result >= 0) {
-		return SUCCESS;
-	} else {
+	if (printf_result < 0) {
 		perror(ERROR_PRINTF);
-		return FAILURE;
+		*success = FAILURE;
 	}
 }
 
-int add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights) {
+void add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights, int* success) {
 
 	bool valid;
 	vertex* v1;
@@ -159,6 +159,7 @@ int add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges,
 	edge* currEdge;
 	int printf_result = 0;
 
+	*success = SUCCESS;
 	valid = TRUE;
 
 	/* no edges between the same vertex */
@@ -189,30 +190,31 @@ int add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges,
 
 	if (printf_result >= 0) {
 		if (valid == TRUE) {
-			if ((add_one_edge(v1, v2, weight) == SUCCESS) &&
-				(add_one_edge(v2, v1, weight) == SUCCESS)) {
+			add_one_edge(v1, v2, weight, success);
+			if (*success) {
+				add_one_edge(v2, v1, weight, success);
+				if (*success) {
 					/* count edge */
 					*countEdges = *countEdges + 1;
 					*totalWeights = *totalWeights + weight;
 					v1->degree++;
 					v2->degree++;
-					return SUCCESS;
+				}
 			}
 		}
 	} else {
 		perror(ERROR_PRINTF);
+		*success = FAILURE;
 	}
-
-	return FAILURE;
 }
 
-int add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight) {
-
-	/* current edge */
+void add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight, int* success) {
 	edge* currEdge;
+	edge* newEdge;
+
+	*success = SUCCESS;
 
 	/* build new edge */
-	edge* newEdge;
 	newEdge = (edge*) malloc(sizeof(edge));
 	if (newEdge != NULL) {
 		newEdge->vertexID = vertexTo->id;
@@ -228,29 +230,30 @@ int add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight) {
 			currEdge->prev = newEdge;
 			vertexFrom->edges = newEdge;
 		}
-		return SUCCESS;
 	} else {
 		perror(ERROR_MALLOC);
-		return FAILURE;
+		*success = FAILURE;
 	}
 }
 
-int remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights) {
+void remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights, int* success) {
 	
-	bool success;
+	bool removed;
 	double removedWeight;
 	vertex* v1;
 	vertex* v2;
 
+	*success = SUCCESS;
+
 	v1 = &(vertices[id1]);
 	v2 = &(vertices[id2]);
 
-	success = ((remove_one_edge(v1, v2, &removedWeight)) && (remove_one_edge(v2, v1, &removedWeight)));
+	removed = ((remove_one_edge(v1, v2, &removedWeight)) && (remove_one_edge(v2, v1, &removedWeight)));
 
-	if(!success) {
+	if(!removed) {
 		if (printf("Error: edge is not in the graph\n") < 0) {
 			perror(ERROR_PRINTF);
-			return FAILURE;
+			*success = FAILURE;
 		}
 	} else {
 		/* count edge */
@@ -259,8 +262,6 @@ int remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* tot
 		v1->degree--;
 		v2->degree--;
 	}
-
-	return SUCCESS;
 }
 
 int remove_one_edge(vertex* vertexFrom, vertex* vertexTo, double* removedWeight) {

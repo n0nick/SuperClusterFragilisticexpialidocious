@@ -26,14 +26,14 @@ struct vertex {
 };
 
 vertex* add_vertex(vertex* currentArray, int* size, int* maxSize, char* name, int* success);
-int print_vertices(vertex* vertices, int size);
-int print_edges(vertex* vertices, int size);
-int print_degree(vertex* vertices, int id);
-int print_by_name(vertex* vertices, char* name, int size);
+void print_vertices(vertex* vertices, int size, int* success);
+void print_edges(vertex* vertices, int size, int* success);
+void print_degree(vertex* vertices, int id, int* success);
+void print_by_name(vertex* vertices, char* name, int size, int* success);
 
-int add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights);
-int remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights);
-int add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight);
+void add_edge(vertex* vertices, int id1, int id2, double weight, int* countEdges, double* totalWeights, int* success);
+void remove_edge(vertex* vertices, int id1, int id2, int* countEdges, double* totalWeights, int* success);
+void add_one_edge(vertex* vertexFrom, vertex* vertexTo, double weight, int* success);
 int remove_one_edge(vertex* vertexFrom, vertex* vertexTo, double* removedWeight);
 
 #endif
