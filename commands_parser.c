@@ -8,65 +8,32 @@
 
 command parse(char* text, int* success) {
 	command cmd;
-	char* arg;
-	char delims[] = " \f\n\r\t\v"; /* equivalent to C's isspace() */
+	int argsCount = 0;
 	int i = 0;
+	int argIndex = 0;
 
-	text = trim(text, success);
+	/* getting the command */
+	while (isspace(text[i])) { i++; }; /* left trim */
+	while (!isspace(text[i])) {
+		cmd.action[argIndex++] = text[i++];
+	}
+	cmd.action[i] = '\0';
+	while (isspace(text[i])) { i++; } /* right trim */
 
-	if (*success == SUCCESS) {
-
-		/* getting the command */
-		cmd.action = strtok(text, delims);
-
-		/* getting arguments */
-		arg = strtok(NULL, delims);
-		while(arg != NULL && *success == SUCCESS) {
-			strcpy(cmd.arguments[i++], trim(arg, success));
-			if (*success == SUCCESS) {
-				arg = strtok(NULL, delims);
-			}
+	while (i < strlen(text)) {
+		argIndex = 0;
+		while (!isspace(text[i]) && (text[i] != '\0')) {
+			cmd.arguments[argsCount][argIndex++] = text[i++];
 		}
+		cmd.arguments[argsCount][argIndex] = '\0';
+		argsCount++;
+
+		while (isspace(text[i])) { i++; } /* arg right trim */
 	}
 
-	if (*success == SUCCESS) {
-		cmd.arguments_count = i;
-	}
+	cmd.arguments_count = argsCount;
 
 	return cmd;
-}
-
-
-char* trim(char* text, int* success) {
-	int trimStart = 0;
-	int trimEnd = strlen(text) - 1;
-	int idx;
-	char* trimmed;
-	
-	while((trimStart < strlen(text)) && (isspace(text[trimStart]))) {
-		trimStart++;
-	}
-
-	while((trimEnd > 0) && (isspace(text[trimEnd]))) {
-		trimEnd--;
-	}
-
-	trimmed = (char *) malloc(trimEnd - trimStart + 1);
-	if (trimmed != NULL) {
-		idx = trimStart;
-		while(idx <= trimEnd) {
-			trimmed[idx - trimStart] = text[idx];
-			idx++;
-		}
-		trimmed[idx - trimStart] = '\0';
-
-		*success = SUCCESS;
-	} else {
-		perror(ERROR_MALLOC);
-		*success = FAILURE;
-	}
-
-	return trimmed;
 }
 
 long int valid_integer(char* arg) {

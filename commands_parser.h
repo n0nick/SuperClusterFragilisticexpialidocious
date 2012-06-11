@@ -12,13 +12,12 @@
 typedef struct command command;
 
 struct command {
-	char* action;
-	char arguments[MAX_ARGUMENTS][MAX_INPUT_SIZE]; /* TODO use the constants here */
+	char action[MAX_INPUT_SIZE];
+	char arguments[MAX_ARGUMENTS][MAX_INPUT_SIZE];
 	char arguments_count;
 };
 
 command parse(char* input, int* success);
-char* trim(char* input, int* success);
 
 long int valid_integer(char* arg);
 long int valid_id(char* arg, int size, int* success);
