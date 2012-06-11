@@ -12,8 +12,8 @@ int* random_ints(int arraySize, int max) {
 		perror(ERROR_MALLOC);
 	}
 	else {
-		for(i = 0; i < arraySize; i++) {
-			arr[i] = max * (rand() / (RAND_MAX + 1.0));
+		for (i = 0; i < arraySize; i++) {
+			arr[i] = rand() % max;
 		}
 	}
 
