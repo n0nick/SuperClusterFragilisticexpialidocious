@@ -13,7 +13,7 @@ commands_parser.o : commands_parser.h commands_parser.c consts.h
 vertex.o : vertex.h vertex.c consts.h
 	$(CC) $(CFLAGS)	-c vertex.c
 
-cluster.o : cluster.h cluster.c vertex.h
+cluster.o : cluster.h cluster.c vertex.h consts.h
 	$(CC) $(CFLAGS)	-c cluster.c
 
 clean :

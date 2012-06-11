@@ -6,31 +6,39 @@
 #include "consts.h"
 #include "commands_parser.h"
 
-command parse(char* input) {
+command parse(char* input, int* success) {
 	command cmd;
 	char* arg;
 	char delims[] = " \f\n\r\t\v"; /* equivalent to C's isspace() */
 	int i = 0;
 
-	input = trim(input);
+	input = trim(input, success);
 
-	/* getting the command */
-	cmd.action = strtok(input, delims);
+	if (*success == SUCCESS) {
 
-	/* getting arguments */
-	arg = strtok(NULL, delims);
-	while(arg != NULL) {
-		strcpy(cmd.arguments[i++], trim(arg));
+		/* getting the command */
+		cmd.action = strtok(input, delims);
+
+		/* getting arguments */
 		arg = strtok(NULL, delims);
+		while(arg != NULL && *success == SUCCESS) {
+			strcpy(cmd.arguments[i++], trim(arg, success));
+			if (*success == SUCCESS) {
+				arg = strtok(NULL, delims);
+			}
+		}
 	}
 
-	cmd.arguments_count = i;
+	if (*success == SUCCESS) {
+		cmd.arguments_count = i;
+		free(input);
+	}
 
 	return cmd;
 }
 
 
-char* trim(char* input) {
+char* trim(char* input, int* success) {
 	int trimStart = 0;
 	int trimEnd = strlen(input) - 1;
 	int idx;
@@ -45,12 +53,19 @@ char* trim(char* input) {
 	}
 
 	output = (char *) malloc(trimEnd - trimStart + 1);
-	idx = trimStart;
-	while(idx <= trimEnd) {
-		output[idx - trimStart] = input[idx];
-		idx++;
+	if (output != NULL) {
+		idx = trimStart;
+		while(idx <= trimEnd) {
+			output[idx - trimStart] = input[idx];
+			idx++;
+		}
+		output[idx - trimStart] = '\0';
+
+		*success = SUCCESS;
+	} else {
+		perror(ERROR_MALLOC);
+		*success = FAILURE;
 	}
-	output[idx - trimStart] = '\0';
 
 	return output;
 }
@@ -85,52 +100,58 @@ long int valid_integer(char* arg) {
 	}
 }
 
-long int valid_id(char* arg, int size) {
-	long int num;
+int validate_id(char* arg, int size, long int* num) {
 	bool valid = FALSE;
 
-	num = valid_integer(arg);
+	*num = valid_integer(arg);
 
-	if (num > INVALID_ARGUMENT) {
-		if (num < size) {
+	if (*num > INVALID_ARGUMENT) {
+		if (*num < size) {
 			valid = TRUE;
 		} else {
-			printf("Error: ID number is not in the system\n");
+			if (printf("Error: ID number is not in the system\n") < 0) {
+				perror(ERROR_PRINTF);
+				return FAILURE;
+			}
 		}
 	} else {
-		printf("Error: ID parameter is not a non-negative integer\n");
+		if (printf("Error: ID parameter is not a non-negative integer\n") < 0) {
+			perror(ERROR_PRINTF);
+			return FAILURE;
+		}
 	}
 
-	if (valid) {
-		return num;
-	} else {
-		return INVALID_ARGUMENT;
+	if (!valid) {
+		*num = INVALID_ARGUMENT;
 	}
+
+	return SUCCESS;
 }
 
-long int valid_cluster_size(char* arg) {
-	long int num;
+int validate_cluster_size(char* arg, long int* num) {
 	bool valid = FALSE;
 
-	num = valid_integer(arg);
+	*num = valid_integer(arg);
 
-	if (num > INVALID_ARGUMENT) {
-		if (num >= MIN_CLUSTER_SIZE) {
+	if (*num > INVALID_ARGUMENT) {
+		if (*num >= MIN_CLUSTER_SIZE) {
 			valid = TRUE;
 		}
 	}
 	
 	if (!valid) {
-		printf("Error: number of clusters parameter must be an integer type bigger than 1\n");
-		return INVALID_ARGUMENT;
+		if (printf("Error: number of clusters parameter must be an integer type bigger than 1\n") < 0) {
+			perror(ERROR_PRINTF);
+			return FAILURE;
+		}
+		*num = INVALID_ARGUMENT;
 	}
 
-	return num;
+	return SUCCESS;
 }
 
-double valid_weight(char* arg) {
+int validate_weight(char* arg, double* num) {
 	int i;
-	double num;
 	bool valid = TRUE;
 	bool gotDecimalPoint = FALSE;
 
@@ -146,26 +167,34 @@ double valid_weight(char* arg) {
 	}
 
 	/* converting string --> double */
-	num = atof(arg);
+	*num = atof(arg);
 
 	/* the number is NON-NEGATIVE :), :| */
-	if(num < 0) {
+	if(*num < 0) {
 		valid = FALSE;
 	}
 
-	if (valid == TRUE) {
-		return num;
-	} else {
-		printf("Error: weight parameter is not a non-negative double\n");
-		return INVALID_ARGUMENT;
+	if (!valid) {
+		if (printf("Error: weight parameter is not a non-negative double\n") < 0) {
+			perror(ERROR_PRINTF);
+			return FAILURE;
+		}
+		*num = INVALID_ARGUMENT;
 	}
+
+	return SUCCESS;
 }
 
-bool valid_args_num(command cmd, int requiredArgs) {
+int validate_args_num(command cmd, int requiredArgs, bool* isvalid) {
 	if (cmd.arguments_count != requiredArgs) {
-		printf("Error: command %s must have %d parameters\n", cmd.action, requiredArgs);
-		return FALSE;
+		if (printf("Error: command %s must have %d parameters\n", cmd.action, requiredArgs) < 0) {
+			perror(ERROR_PRINTF);
+			return FAILURE;
+		}
+		*isvalid = FALSE;
 	} else {
-		return TRUE;
+		*isvalid = TRUE;
 	}
+
+	return SUCCESS;
 }

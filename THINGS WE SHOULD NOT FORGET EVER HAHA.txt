@@ -1,5 +1,5 @@
 * check return value for malloc, printf, scanf
   - malloc (return should not be null)
   - printf (return should be >= 0)
-  - scanf (return should be != EOF)
+  - getchar (not EOF)
 * fix quit : free memory
