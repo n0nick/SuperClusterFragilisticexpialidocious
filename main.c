@@ -142,9 +142,13 @@ int main(int argc, char* argv[])
 					/* action: print */
 					else if(strcmp(cmd.action, COMMAND_PRINT) == 0) {
 						if (valid_args_num(cmd, 0, &success) && success) {
-							print_vertices(vertices, size, &success);
-							if (success && edges_count > 0) {
-								print_edges(vertices, size, &success);
+							if (size > 0) {
+								print_vertices(vertices, size, &success);
+								if (success && edges_count > 0) {
+									print_edges(vertices, size, &success);
+								}
+							} else {
+								printf_result = printf("\n");
 							}
 						}
 					}
