@@ -3,5 +3,3 @@
   - printf (return should be >= 0)
   - scanf (return should be != EOF)
 * fix quit : free memory
-* fix issue at https://gist.github.com/2894512
-* newlines repeat last command
